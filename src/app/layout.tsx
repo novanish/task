@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { Navbar } from "@/components/navbar";
 import QueryProvider from "@/providers/query-provider";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,10 +33,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           enableSystem
           disableTransitionOnChange
         >
-          <QueryProvider>
-            <Navbar />
-            {children}
-          </QueryProvider>
+          <NuqsAdapter>
+            <QueryProvider>
+              <Navbar />
+              {children}
+            </QueryProvider>
+          </NuqsAdapter>
         </ThemeProvider>
       </body>
     </html>

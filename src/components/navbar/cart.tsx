@@ -12,7 +12,7 @@ export function Cart() {
       {cartCount > 0 && (
         <Badge
           variant="secondary"
-          className="absolute -right-1 -top-1 size-5 rounded-full p-0 text-xs flex items-center justify-center"
+          className="absolute -top-1 -right-1 flex size-5 items-center justify-center rounded-full p-0 text-xs"
         >
           {cartCount}
         </Badge>

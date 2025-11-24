@@ -19,13 +19,13 @@ export function NavMenu() {
         </Button>
       </SheetTrigger>
       <SheetContent side="right" className="w-[80%] sm:w-[400px]">
-        <nav className="flex flex-col gap-4 mt-8 px-6">
+        <nav className="mt-8 flex flex-col gap-4 px-6">
           {NAVIGATION_LINKS.map((item) => (
             <Link
               key={item.name}
               href={item.href}
               onClick={() => setOpen(false)}
-              className="block px-2 py-1 text-lg font-medium hover:text-primary transition-colors"
+              className="hover:text-primary block px-2 py-1 text-lg font-medium transition-colors"
             >
               {item.name}
             </Link>

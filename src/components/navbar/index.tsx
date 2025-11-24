@@ -8,11 +8,11 @@ import Link from "next/link";
 
 export function Navbar() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
+    <header className="border-border/40 bg-background/95 supports-backdrop-filter:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur">
       <nav className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link href="/" className="flex items-center space-x-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-            <span className="text-lg font-bold text-primary-foreground">S</span>
+          <div className="bg-primary flex h-8 w-8 items-center justify-center rounded-lg">
+            <span className="text-primary-foreground text-lg font-bold">S</span>
           </div>
           <span className="text-xl font-semibold">Store</span>
         </Link>
@@ -22,7 +22,7 @@ export function Navbar() {
             <Link
               key={item.name}
               href={item.href}
-              className="text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
+              className="text-foreground/80 hover:text-foreground text-sm font-medium transition-colors"
             >
               {item.name}
             </Link>
