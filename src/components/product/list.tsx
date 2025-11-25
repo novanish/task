@@ -2,29 +2,38 @@
 
 import { ProductCard } from "@/components/product/card";
 import { NoProducts } from "@/components/product/empty";
+import { ProductError } from "@/components/product/error";
 import { ProductCardSkeleton } from "@/components/product/skeleton";
 import { Spinner } from "@/components/ui/spinner";
 import { useProductFilters } from "@/hooks/use-product-filters";
 import { getProducts } from "@/services/getProducts";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { InView } from "react-intersection-observer";
+import ms from "ms";
 
 export function ProductList() {
   const [filters] = useProductFilters();
 
-  const { data, isLoading, fetchNextPage, isFetchingNextPage } =
-    useInfiniteQuery({
-      queryKey: ["products", filters],
-      queryFn: async ({ pageParam = 1 }) =>
-        getProducts({ page: pageParam.toString(), limit: "6", ...filters }),
+  const {
+    data,
+    isLoading,
+    fetchNextPage,
+    isFetchingNextPage,
+    isError,
+    refetch,
+  } = useInfiniteQuery({
+    queryKey: ["products", filters],
+    queryFn: async ({ pageParam }) =>
+      getProducts({ page: pageParam.toString(), limit: "6", ...filters }),
 
-      getNextPageParam: (lastPage) => {
-        const hasMore = lastPage.page * lastPage.limit < lastPage.total;
-        return hasMore ? lastPage.page + 1 : undefined;
-      },
-      initialPageParam: 1,
-      refetchOnWindowFocus: false,
-    });
+    getNextPageParam: (lastPage) => {
+      const hasMore = lastPage.page * lastPage.limit < lastPage.total;
+      return hasMore ? lastPage.page + 1 : undefined;
+    },
+    initialPageParam: 1,
+    refetchOnWindowFocus: false,
+    staleTime: ms("5 minutes"),
+  });
 
   const products = data?.pages.flatMap((page) => page.products) || [];
 
@@ -36,6 +45,10 @@ export function ProductList() {
         ))}
       </div>
     );
+  }
+
+  if (isError) {
+    return <ProductError onRetry={refetch} />;
   }
 
   if (products.length === 0) {

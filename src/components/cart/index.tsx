@@ -11,7 +11,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useCartStore } from "@/store/use-cart-store";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { ShoppingBag, ShoppingCart } from "lucide-react";
 
 export function Cart() {

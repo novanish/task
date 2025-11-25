@@ -1,4 +1,0 @@
-Handle empty state on search
-handle error state
-create add to cart functionality
-add suspsense fallback in home page
