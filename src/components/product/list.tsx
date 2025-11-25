@@ -3,16 +3,19 @@
 import { ProductCard } from "@/components/product/card";
 import { ProductCardSkeleton } from "@/components/product/skeleton";
 import { Spinner } from "@/components/ui/spinner";
+import { useProductFilters } from "@/hooks/use-product-filters";
 import { getProducts } from "@/services/getProducts";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { InView } from "react-intersection-observer";
 
 export function ProductList() {
+  const [filters] = useProductFilters();
+
   const { data, isLoading, fetchNextPage, isFetchingNextPage } =
     useInfiniteQuery({
-      queryKey: ["products"],
+      queryKey: ["products", filters],
       queryFn: async ({ pageParam = 1 }) =>
-        getProducts({ page: pageParam.toString(), limit: "6" }),
+        getProducts({ page: pageParam.toString(), limit: "6", ...filters }),
 
       getNextPageParam: (lastPage) => {
         const hasMore = lastPage.page * lastPage.limit < lastPage.total;
@@ -38,7 +41,6 @@ export function ProductList() {
     <InView
       rootMargin="300px"
       onChange={(inView) => {
-        console.log("inView", inView);
         if (inView && !isFetchingNextPage) {
           fetchNextPage();
         }

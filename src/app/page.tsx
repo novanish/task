@@ -1,5 +1,8 @@
+import { ProductsFilter } from "@/components/product/filter";
 import { ProductList } from "@/components/product/list";
+import { ProductsSearch } from "@/components/product/search";
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 export default function Home() {
   return (
@@ -13,7 +16,13 @@ export default function Home() {
         </p>
       </div>
 
-      <ProductList />
+      <Suspense>
+        <div className="mx-auto mb-15 max-w-3xl space-y-6">
+          <ProductsSearch />
+          <ProductsFilter />
+        </div>
+        <ProductList />
+      </Suspense>
     </div>
   );
 }

@@ -1,14 +1,13 @@
 import { GetProductsResponse } from "@/types/get-product-response";
 
 interface Params {
-  [key: string]: string;
+  [key: string]: string | undefined | null;
 }
 
 export async function getProducts(
-  params?: Params,
+  params: Params,
 ): Promise<GetProductsResponse> {
-  await new Promise((resolve) => setTimeout(resolve, 3000)); // Simulate network delay
-  const query = params ? new URLSearchParams(params).toString() : "";
+  const query = buildQueryString(params);
   const url = `https://fakeapi.in/api/products${query ? "?" + query : ""}`;
   const res = await fetch(url, {
     cache: "no-store",
@@ -19,4 +18,11 @@ export async function getProducts(
   }
 
   return res.json();
+}
+
+function buildQueryString(params: Params): string {
+  const queries = Object.entries(params).filter(
+    ([, value]) => value != null,
+  ) as Array<[string, string]>;
+  return queries.length > 0 ? new URLSearchParams(queries).toString() : "";
 }
