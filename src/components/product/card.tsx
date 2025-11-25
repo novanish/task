@@ -4,20 +4,30 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react";
 import { Product } from "@/types/product.types";
+import { useCartStore } from "@/store/use-cart-store";
+import { useShallow } from "zustand/shallow";
+import { formatCurrency } from "@/lib/format-currency";
 
-export function ProductCard({
-  id,
-  name,
-  description,
-  price,
-  category,
-  rating,
-  image,
-}: Product) {
-  const isInCart = false;
-  function onAddToCart(id: number) {}
+type Props = Product;
 
-  function onRemoveFromCart(id: number) {}
+export function ProductCard(props: Props) {
+  const { id, name, description, price, category, rating, image } = props;
+
+  const { addItem, removeItem, isInCart } = useCartStore(
+    useShallow((state) => ({
+      addItem: state.addItem,
+      removeItem: state.removeItem,
+      isInCart: state.cart.some((item) => item.id === id),
+    })),
+  );
+
+  function onAddToCart() {
+    addItem(props);
+  }
+
+  function onRemoveFromCart() {
+    removeItem(id);
+  }
 
   return (
     <div className="bg-card border-border flex h-full flex-col overflow-hidden rounded-lg border transition-shadow duration-300 hover:shadow-lg">
@@ -25,7 +35,8 @@ export function ProductCard({
         <Image
           src={image || "/placeholder.png"}
           alt={name}
-          fill
+          width={300}
+          height={180}
           className="h-full w-full object-cover object-center"
         />
 
@@ -49,12 +60,12 @@ export function ProductCard({
 
         <div className="mb-2">
           <span className="text-foreground text-lg font-bold">
-            ${price.toFixed(2)}
+            {formatCurrency(price)}
           </span>
         </div>
 
         <Button
-          onClick={() => (isInCart ? onRemoveFromCart(id) : onAddToCart(id))}
+          onClick={isInCart ? onRemoveFromCart : onAddToCart}
           variant={isInCart ? "destructive" : "default"}
           className="w-full"
         >

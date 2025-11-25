@@ -6,14 +6,14 @@ import {
 } from "nuqs";
 
 const productFilterParsers = {
-  search: parseAsString,
+  q: parseAsString,
   sortField: parseAsStringEnum(["price", "rating"]),
   sortOrder: parseAsStringEnum(["asc", "desc"]),
   category: parseAsString,
 };
 
 const productFilterUrlKeys: UrlKeys<typeof productFilterParsers> = {
-  search: "q",
+  q: "q",
   sortField: "sortBy",
   sortOrder: "order",
   category: "cat",

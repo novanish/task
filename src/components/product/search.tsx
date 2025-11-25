@@ -17,9 +17,9 @@ export function ProductsSearch() {
     const value = e.target.value.trim();
 
     if (value) {
-      debouncedSetFilters({ search: value });
+      debouncedSetFilters({ q: value });
     } else {
-      setFilters({ search: null });
+      setFilters({ q: null });
     }
   }
 
@@ -28,7 +28,7 @@ export function ProductsSearch() {
       <InputGroup>
         <InputGroupInput
           placeholder="Search Products..."
-          defaultValue={filters.search || ""}
+          defaultValue={filters.q || ""}
           onChange={handleSearch}
         />
         <InputGroupAddon>

@@ -1,6 +1,7 @@
 "use client";
 
 import { ProductCard } from "@/components/product/card";
+import { NoProducts } from "@/components/product/empty";
 import { ProductCardSkeleton } from "@/components/product/skeleton";
 import { Spinner } from "@/components/ui/spinner";
 import { useProductFilters } from "@/hooks/use-product-filters";
@@ -35,6 +36,10 @@ export function ProductList() {
         ))}
       </div>
     );
+  }
+
+  if (products.length === 0) {
+    return <NoProducts />;
   }
 
   return (

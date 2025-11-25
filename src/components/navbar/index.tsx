@@ -1,6 +1,6 @@
 "use client";
 
-import { Cart } from "@/components/navbar/cart";
+import { Cart } from "@/components/cart";
 import { NavMenu } from "@/components/navbar/menu";
 import { NAVIGATION_LINKS } from "@/components/navbar/navigation-links";
 import { ThemeSwitcher } from "@/components/navbar/theme-switcher";
