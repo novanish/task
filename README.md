@@ -31,13 +31,15 @@ cd task
 pnpm install
 ```
 
-### 3. Build the project
+### 3. Create a `.env` file and set NEXT_PUBLIC_API_BASE_URL=https://fakeapi.in/api or copy from .env.example
+
+### 4. Build the project
 
 ```bash
 pnpm build
 ```
 
-### 4. Start preview server
+### 5. Start preview server
 
 ```bash
 pnpm start
