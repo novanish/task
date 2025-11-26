@@ -9,7 +9,7 @@ export function CartItems() {
   const { cart, removeItem, updateQuantity } = useCartStore();
 
   return (
-    <ScrollArea className="-mr-4 h-[calc(100vh-350px)] flex-1 pr-4">
+    <ScrollArea className="-mr-4 h-[calc(100vh-390px)] flex-1 pr-4">
       <div className="space-y-4 py-4">
         {cart.map((item) => (
           <div key={item.id} className="flex gap-4">

@@ -8,33 +8,47 @@ import {
 import { useDebounce } from "@/hooks/use-debounce";
 import { useProductFilters } from "@/hooks/use-product-filters";
 import { LucideSearch } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export function ProductsSearch() {
   const [filters, setFilters] = useProductFilters();
   const debouncedSetFilters = useDebounce(setFilters, 500);
+  const [search, setSearch] = useState(filters.q || "");
+
+  useEffect(() => {
+    function syncSearch() {
+      setSearch(filters.q || "");
+    }
+
+    syncSearch();
+  }, [filters.q]);
 
   function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
     const value = e.target.value.trim();
 
-    if (value) {
-      debouncedSetFilters({ q: value });
-    } else {
-      setFilters({ q: null });
-    }
+    setSearch(e.target.value);
+    debouncedSetFilters({ q: value ? value : null });
   }
 
   return (
-    <div className="mx-auto">
+    <form
+      className="mx-auto"
+      onSubmit={(e) => {
+        e.preventDefault();
+      }}
+    >
       <InputGroup>
         <InputGroupInput
           placeholder="Search Products..."
-          defaultValue={filters.q || ""}
+          value={search}
           onChange={handleSearch}
+          aria-label="Search Products"
+          enterKeyHint="search"
         />
         <InputGroupAddon>
           <LucideSearch />
         </InputGroupAddon>
       </InputGroup>
-    </div>
+    </form>
   );
 }
