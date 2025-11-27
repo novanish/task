@@ -30,6 +30,12 @@ export function ProductsSearch() {
     debouncedSetFilters({ q: value ? value : null });
   }
 
+  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "Enter") {
+      e.currentTarget.blur(); // hides keyboard
+    }
+  }
+
   return (
     <form
       className="mx-auto"
@@ -44,6 +50,7 @@ export function ProductsSearch() {
           onChange={handleSearch}
           aria-label="Search Products"
           enterKeyHint="search"
+          onKeyDown={handleKeyDown}
         />
         <InputGroupAddon>
           <LucideSearch />
